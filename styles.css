@@ -93,14 +93,14 @@ body {
     display: block;
     font-size: 0.9em;
     color: #a0a0a0;
-    margin-bottom: 2px;
+    margin-bottom: 2px; /* Further reduced spacing */
 }
 
 .stat-value {
     font-weight: bold;
     color: #e0e0e0;
     display: block;
-    margin-bottom: 3px;
+    margin-bottom: 3px; /* Further reduced spacing */
 }
 
 .stat-slider {

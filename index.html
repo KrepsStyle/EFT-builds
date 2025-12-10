@@ -27,6 +27,7 @@
         
         <!-- Weapon Visualization Area -->
         <section id="weapon-display">
+            <img src="" alt="Assembled weapon" id="weapon-image">
             <!-- The actual weapon image will be loaded here dynamically -->
             <p>Your assembled weapon will appear here.</p>
         </section>
@@ -35,7 +36,7 @@
         <aside id="stats-sidebar">
             <h2>Build Statistics & Optimization</h2>
             
-            <!-- This area now contains both the static display and the slider input -->
+            <!-- Putting the value and unit inside the span for consistent styling -->
             <div class="stat-group">
                 <label for="slider-weight">Weight:</label>
                 <span id="stat-weight" class="stat-value">-- kg</span>
@@ -44,8 +45,9 @@
 
             <div class="stat-group">
                 <label for="slider-ergonomics">Ergonomics:</label>
+                <!-- Confirmed ID in English singular: stat-ergonomics -->
                 <span id="stat-ergonomics" class="stat-value">-- pts</span>
-                <input type="range" id="slider-ergonomia" min="0" max="100" value="50" class="stat-slider" disabled>
+                <input type="range" id="slider-ergonomics" min="0" max="100" value="50" class="stat-slider" disabled>
             </div>
 
             <div class="stat-group">
