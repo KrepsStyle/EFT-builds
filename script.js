@@ -3,6 +3,7 @@
 // Define the GraphQL API endpoint exactly as requested by the user
 const API_URL = 'https://api.tarkov.dev/graphql';
 
+const ALLOWED_KEYWORDS = ["default", "urbana"]
 // Define realistic min/max ranges for stats for the sliders (Tarkov values)
 const STAT_RANGES = {
     weight: { min: 2.0, max: 6.0 }, // kg
@@ -25,10 +26,10 @@ async function fetchWeaponsData() {
     // My note: Using the user's exact provided nested query
     const query = `
     {
-        items(categoryNames: Weapon) {
+        items(categoryNames: [AssaultCarbine, AssaultRifle, SniperRifle, GrenadeLauncher, Machinegun, MarksmanRifle, Handgun, Shotgun, SMG]) {
             id
-            name
             shortName
+            name
             imageLink
             weight
             ergonomicsModifier
@@ -41,6 +42,7 @@ async function fetchWeaponsData() {
                     name
                     shortName
                     imageLink
+                    ergonomicsModifier
                 }
                 quantity
             }
@@ -48,7 +50,7 @@ async function fetchWeaponsData() {
     }
     `;
 
-   try {
+    try {
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
@@ -65,13 +67,18 @@ async function fetchWeaponsData() {
         const jsonResponse = await response.json();
         const allItems = jsonResponse.data.items || [];
         
+// 1. Keep only weapons that have const ALLOWED_KEYWORDS in their name
         const filteredWeaponsList = allItems.filter(item => {
-            // Verifica se o valor é estritamente null ou undefined (significa que não é um número)
-            return item.ergonomicsModifier === null || item.ergonomicsModifier === undefined;
-            // Se a API retornar '0' para nulo, a regra precisará ser ajustada para: return !item.ergonomicsModifier;
-        });
+            const itemNameLower = item.name.toLowerCase();
+             // The item must include at least one of the allowed keywords
+            const includesKeyword = ALLOWED_KEYWORDS.some(keyword => itemNameLower.includes(keyword));
+            
+            // Additionally, maintain the original filter: item base ergonomics must be null
+            const hasNullErgo = item.ergonomicsModifier === null || item.ergonomicsModifier === undefined;
 
-        // Return the filtered list of weapons
+            return includesKeyword && hasNullErgo;
+        });
+        // Return the final filtered list of weapons (only those with 'Default')
         return filteredWeaponsList;
 
     } catch (error) {
@@ -177,9 +184,28 @@ function handleWeaponChange(event) {
     const selectedWeapon = allWeaponsData.find(w => w.id === selectedWeaponId);
 
     if (selectedWeapon) {
-        updateStatsDisplay(selectedWeapon);
-        const weaponImage = document.getElementById('weapon-image');
-        if (weaponImage) { 
+        let totalErgonomics = selectedWeapon.ergonomicsModifier || 0;
+
+        if (selectedWeapon.containsItems) {
+            selectedWeapon.containsItems.forEach(partWrapper => {
+                const part = partWrapper.item;
+
+                if (part) {
+                    const partModifier = part.ergonomicsModifier || 0;
+                    totalErgonomics += partModifier * partWrapper.quantity;
+                }
+            });
+        }
+
+    const displayStats = {
+        ...selectedWeapon,
+        ergonomicsModifier: totalErgonomics
+    };
+
+    updateStatsDisplay(displayStats);
+
+    const weaponImage = document.getElementById('weapon-image');
+    if (weaponImage) { 
             weaponImage.src = selectedWeapon.imageLink;
             weaponImage.alt = `Image of ${selectedWeapon.name}`;
             weaponImage.style.display = 'block';
@@ -193,7 +219,7 @@ function handleWeaponChange(event) {
 }
 
 
-// 5. Initialization
+// 6. Initialization
 document.addEventListener('DOMContentLoaded', async () => {
     console.log("EFT-builds script loaded. Fetching data from API...");
     allWeaponsData = await fetchWeaponsData() || [];
