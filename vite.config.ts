@@ -10,14 +10,4 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  // ADD THIS PROXY CONFIGURATION BLOCK
-  server: {
-    proxy: {
-      '/graphql': {
-        target: 'https://api.tarkov.dev/graphql',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/graphql/, ''),
-      },
-    },
-  },
 })

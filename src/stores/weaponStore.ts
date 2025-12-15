@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 // --- Configuration Constants ---
 // Use the local proxy path defined in vite.config.ts
-const API_URL = '/graphql'
+const API_URL = 'https://api.tarkov.dev/graphql'
 const ALLOWED_KEYWORDS = ['default', 'urbana']
 const STAT_RANGES = {
   weight: { min: 2.0, max: 6.0 }, // kg
