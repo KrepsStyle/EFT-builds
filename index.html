@@ -1,100 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="">
+  <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Project Name: EFT-builds -->
-    <title>EFT-builds</title>
-    <!-- Linking my custom CSS file for styling -->
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-    <!-- 1. Header Area for site title and main weapon selection -->
-    <header id="site-header">
-        <h1>EFT-builds</h1>
-        <div class="controls">
-            <label for="weapon-select">Select Weapon:</label>
-            <select id="weapon-select">
-                <!-- Weapon options will be populated here using JavaScript later -->
-                <option value="">Loading weapons...</option>
-            </select>
-        </div>
-    </header>
-
-    <!-- 2. Main Container (Weapon Display and Stats Side-by-Side) -->
-    <main class="main-container">
-        
-        <!-- Weapon Visualization Area -->
-        <section id="weapon-display">
-            <img src="" alt="Assembled weapon" id="weapon-image">
-            <!-- The actual weapon image will be loaded here dynamically -->
-            <p>Your assembled weapon will appear here.</p>
-        </section>
-
-        <!-- Stats Sidebar and Controls -->
-        <aside id="stats-sidebar">
-            <h2>Build Statistics & Optimization</h2>
-            
-            <!-- Putting the value and unit inside the span for consistent styling -->
-            <div class="stat-group">
-                <label for="slider-weight">Weight:</label>
-                <span id="stat-weight" class="stat-value">-- kg</span>
-                <input type="range" id="slider-weight" min="0" max="100" value="50" class="stat-slider" disabled>
-            </div>
-
-            <div class="stat-group">
-                <label for="slider-ergonomics">Ergonomics:</label>
-                <!-- Confirmed ID in English singular: stat-ergonomics -->
-                <span id="stat-ergonomics" class="stat-value">-- pts</span>
-                <input type="range" id="slider-ergonomics" min="0" max="100" value="50" class="stat-slider" disabled>
-            </div>
-
-            <div class="stat-group">
-                <label for="slider-accuracy">Accuracy:</label>
-                <span id="stat-accuracy" class="stat-value">-- MOA</span>
-                <input type="range" id="slider-accuracy" min="0" max="100" value="50" class="stat-slider" disabled>
-            </div>
-            
-            <div class="stat-group">
-                <label for="slider-sighting-range">Sighting Range:</label>
-                <span id="stat-sighting-range" class="stat-value">-- m</span>
-                <input type="range" id="slider-sighting-range" min="0" max="100" value="50" class="stat-slider" disabled>
-            </div>
-
-            <div class="stat-group">
-                <label for="slider-recoil-v">Vertical Recoil:</label>
-                <span id="stat-recoil-v" class="stat-value">-- pts</span>
-                <input type="range" id="slider-recoil-v" min="0" max="100" value="50" class="stat-slider" disabled>
-            </div>
-
-            <div class="stat-group">
-                <label for="slider-recoil-h">Horizontal Recoil:</label>
-                <span id="stat-recoil-h" class="stat-value">-- pts</span>
-                <input type="range" id="slider-recoil-h" min="0" max="100" value="50" class="stat-slider" disabled>
-            </div>
-            
-            <div class="stat-group">
-                <label for="slider-muzzle-velocity">Muzzle Velocity:</label>
-                <span id="stat-muzzle-velocity" class="stat-value">-- m/s</span>
-                <input type="range" id="slider-muzzle-velocity" min="0" max="100" value="50" class="stat-slider" disabled>
-            </div>
-            
-            <!-- My note: The functionality to actually drag these sliders and optimize the build will require advanced JavaScript later -->
-            
-        </aside>
-
-    </main>
-
-    <!-- 3. Parts Selection Area (Bottom bar/footer) -->
-    <footer id="parts-selection-area">
-        <h2>Available Parts (Handguards, Grips, etc)</h2>
-        <!-- Menus for selecting specific parts will go here -->
-        <p>List of parts will load here...</p>
-    </footer>
-
-    <!-- Linking my custom JavaScript file for interactivity -->
-    <script src="script.js"></script>
-
-</body>
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
