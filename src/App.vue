@@ -72,9 +72,8 @@ const store = useWeaponStore()
 onMounted(async () => {
   await store.fetchWeaponsData()
 
-  if (store.allWeaponsData.value && store.allWeaponsData.value.length > 0) {
-    store.selectedWeaponId = store.allWeaponsData.value.id
-    store.handleWeaponChange()
+  if (store.allWeaponsData && store.allWeaponsData.length > 0) {
+    store.selectedWeaponId = store.allWeaponsData[0].id
   }
 })
 </script>
