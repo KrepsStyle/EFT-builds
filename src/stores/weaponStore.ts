@@ -24,20 +24,51 @@ export const useWeaponStore = defineStore('weapon', () => {
   const currentStats = ref<any>({
     weight: '--',
     ergonomicsModifier: '--',
-    accuracyModifier: '--',
-    sightingRange: '--',
-    verticalRecoil: '--',
-    horizontalRecoil: '--',
-    muzzleVelocity: '--',
+    accuracyModifier: '--', // Added: Accuracy (MOA)
+    sightingRange: '--', // Added: Sighting Range (m)
+    verticalRecoil: '--', // Added: Vertical Recoil (pts)
+    horizontalRecoil: '--', // Added: Horizontal Recoil (pts)
+    muzzleVelocity: '--', // Added: Muzzle Velocity (m/s)
+    fireRate: '--', // Added: Fire Rate (RPM)
+    effectiveDistance: '--', // Added: Effective Distance (m)
   })
 
   // --- Actions (Functions to modify state) ---
 
   async function fetchWeaponsData() {
     const query = `{
-      items(categoryNames: [AssaultCarbine, AssaultRifle, SniperRifle, GrenadeLauncher, Machinegun, MarksmanRifle, Handgun, Shotgun, SMG]) {
-        id, shortName, name, imageLink, weight, ergonomicsModifier, accuracyModifier, recoilModifier, velocity,
-        containsItems { item { id, name, shortName, imageLink, ergonomicsModifier }, quantity }
+      items(
+        categoryNames: [
+          AssaultCarbine
+          AssaultRifle
+          SniperRifle
+          GrenadeLauncher
+          Machinegun
+          MarksmanRifle
+          Handgun
+          Shotgun
+          SMG
+        ]
+      ) {
+        id
+        shortName
+        name
+        imageLink
+        weight
+        ergonomicsModifier
+        accuracyModifier
+        recoilModifier
+        velocity
+        containsItems {
+          item {
+            id
+            name
+            shortName
+            imageLink
+            ergonomicsModifier
+          }
+          quantity
+        }
       }
     }`
 
@@ -55,7 +86,6 @@ export const useWeaponStore = defineStore('weapon', () => {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
 
-      // CORRECTION: Await the JSON response
       const jsonResponse = await response.json()
       const allItems = jsonResponse.data.items || []
 
@@ -71,7 +101,6 @@ export const useWeaponStore = defineStore('weapon', () => {
       allWeaponsData.value.sort((a, b) => a.name.localeCompare(b.name))
     } catch (error) {
       console.error('Error fetching weapon data:', error)
-      // CRUCIAL: Stop execution if error occurs
       return
     }
   }
@@ -100,9 +129,13 @@ export const useWeaponStore = defineStore('weapon', () => {
         ...foundWeapon,
         ergonomicsModifier: totalErgonomics.toFixed(2),
         weight: foundWeapon.weight?.toFixed(2),
-        verticalRecoil: foundWeapon.recoilModifier?.toFixed(0),
-        horizontalRecoil: foundWeapon.recoilModifier?.toFixed(0),
-        muzzleVelocity: foundWeapon.velocity?.toFixed(0),
+        accuracyModifier: foundWeapon.accuracyModifier?.toFixed(1) || '--',
+        sightingRange: foundWeapon.sightingRange?.toFixed(0) || '--', // API might use velocity instead, need to check
+        verticalRecoil: foundWeapon.recoilModifier?.toFixed(0) || '--',
+        horizontalRecoil: foundWeapon.horizontalRecoil?.toFixed(0) || '--',
+        muzzleVelocity: foundWeapon.velocity?.toFixed(0) || '--',
+        fireRate: foundWeapon.fireRate?.toFixed(0) || '--', // Assuming API has this field
+        effectiveDistance: foundWeapon.effectiveDistance?.toFixed(0) || '--', // Assuming API has this field
       }
     }
   }

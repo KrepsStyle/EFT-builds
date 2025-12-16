@@ -45,8 +45,95 @@
         disabled
       />
     </div>
+    <!-- Accuracy Stat Group -->
+    <div class="stat-group">
+      <label for="slider-accuracy">Accuracy:</label>
+      <span id="stat-accuracy" class="stat-value"
+        >{{ store.currentStats.accuracyModifier }} MOA</span
+      >
+      <input
+        type="range"
+        id="slider-accuracy"
+        min="0"
+        max="100"
+        :value="
+          mapStatToSlider(
+            parseFloat(store.currentStats.accuracyModifier),
+            store.STAT_RANGES.accuracy.min,
+            store.STAT_RANGES.accuracy.max,
+          )
+        "
+        class="stat-slider"
+        disabled
+      />
+    </div>
 
-    <!-- Add all other 5 stat groups here -->
+    <!-- Vertical Recoil Stat Group -->
+    <div class="stat-group">
+      <label for="slider-recoil-v">Vertical Recoil:</label>
+      <span id="stat-recoil-v" class="stat-value">{{ store.currentStats.verticalRecoil }} pts</span>
+      <input
+        type="range"
+        id="slider-recoil-v"
+        min="0"
+        max="100"
+        :value="
+          mapStatToSlider(
+            parseFloat(store.currentStats.verticalRecoil),
+            store.STAT_RANGES.recoil_v.min,
+            store.STAT_RANGES.recoil_v.max,
+          )
+        "
+        class="stat-slider"
+        disabled
+      />
+    </div>
+
+    <!-- Horizontal Recoil Stat Group -->
+    <div class="stat-group">
+      <label for="slider-recoil-h">Horizontal Recoil:</label>
+      <span id="stat-recoil-h" class="stat-value"
+        >{{ store.currentStats.horizontalRecoil }} pts</span
+      >
+      <input
+        type="range"
+        id="slider-recoil-h"
+        min="0"
+        max="100"
+        :value="
+          mapStatToSlider(
+            parseFloat(store.currentStats.horizontalRecoil),
+            store.STAT_RANGES.recoil_h.min,
+            store.STAT_RANGES.recoil_h.max,
+          )
+        "
+        class="stat-slider"
+        disabled
+      />
+    </div>
+
+    <!-- Muzzle Velocity Stat Group -->
+    <div class="stat-group">
+      <label for="slider-muzzle-velocity">Muzzle Velocity:</label>
+      <span id="stat-muzzle-velocity" class="stat-value"
+        >{{ store.currentStats.muzzleVelocity }} m/s</span
+      >
+      <input
+        type="range"
+        id="slider-muzzle-velocity"
+        min="0"
+        max="100"
+        :value="
+          mapStatToSlider(
+            parseFloat(store.currentStats.muzzleVelocity),
+            store.STAT_RANGES.muzzleVelocity.min,
+            store.STAT_RANGES.muzzleVelocity.max,
+          )
+        "
+        class="stat-slider"
+        disabled
+      />
+    </div>
   </aside>
 </template>
 
